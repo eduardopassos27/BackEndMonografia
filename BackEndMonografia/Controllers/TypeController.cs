@@ -22,5 +22,13 @@ namespace BackEndMonografia.Controllers
 
             return Ok(retorno.ToList());
         }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> InsertType([FromBody] TypeModel model)
+        {
+            var retorno = await _typeService.InsertTypeAsync(model);
+
+            return Ok(retorno);
+        }
     }
 }

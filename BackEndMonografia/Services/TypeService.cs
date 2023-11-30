@@ -15,5 +15,10 @@ namespace BackEndMonografia.Services
         {
             return await _typeRepository.GetAll();
         }
+
+        public async Task<int> InsertTypeAsync(TypeModel model)
+        {
+            return await _typeRepository.Add(model);
+        }
     }
 }

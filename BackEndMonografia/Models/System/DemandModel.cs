@@ -1,4 +1,5 @@
-﻿namespace BackEndMonografia.Models.System
+﻿
+namespace BackEndMonografia.Models.System
 {
     public class DemandModel
     {
@@ -9,7 +10,7 @@
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int StatusId { get; set; }
-        public string SystemUser { get; set; }
+        public string? SystemUser { get; set; }
         public int ResulutionDeadline { get; set; }
         public string? Solution { get; set; }
         public string? OpeningComment { get; set; }

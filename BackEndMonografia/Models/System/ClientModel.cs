@@ -1,7 +1,11 @@
-﻿namespace BackEndMonografia.Models.System
+﻿using Dapper.Contrib.Extensions;
+
+namespace BackEndMonografia.Models.System
 {
+    [Table("ClientTable")]
     public class ClientModel
     {
+        [Key]
         public long ClientId { get; set; }
         public string ClientName { get; set; }
         public int AccountNumber { get; set; }

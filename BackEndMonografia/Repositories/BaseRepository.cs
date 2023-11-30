@@ -22,7 +22,9 @@ namespace BackEndMonografia.Repositories
 
         public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return await _dbConector.Connection.GetAllAsync<TEntity>();
+            var retorno = await _dbConector.Connection.GetAllAsync<TEntity>();
+
+            return retorno;
         }
 
         public async Task<TEntity> GetById(int id)
