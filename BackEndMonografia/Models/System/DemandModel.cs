@@ -17,4 +17,14 @@ namespace BackEndMonografia.Models.System
         public string? FinalComment {get; set;}
         public int ClientId { get; set; }
     }
+
+    public class CompleteDemandModel : DemandModel
+    {
+        public string TypeDescription { get; set; }
+        public string DescriptionText { get; set; }
+        public string AreaName { get; set; }
+        public string StatusDescription { get; set; }
+
+    }
+
 }

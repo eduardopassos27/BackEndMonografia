@@ -10,10 +10,12 @@ namespace BackEndMonografia.Controllers
     public class ClientController : ControllerBase
     {
         private readonly IBaseService<ClientModel> _baseService;
+        private readonly IClientService _clientService;
 
-        public ClientController(IBaseService<ClientModel> baseService)
+        public ClientController(IBaseService<ClientModel> baseService, IClientService clientService)
         {
             _baseService = baseService;
+            _clientService = clientService;
         }
 
         [HttpGet]
@@ -24,11 +26,36 @@ namespace BackEndMonografia.Controllers
             return Ok(retorno.ToList());
         }
         [HttpPost]
-        public async Task<ActionResult<int>> InserArea([FromBody] ClientModel model)
+        public async Task<ActionResult<int>> InsertArea([FromBody] ClientModel model)
         {
             var retorno = await _baseService.Add(model);
 
             return Ok(retorno);
         }
+        [HttpGet("{accountId}")]
+        public async Task<ActionResult<ClientModel>> GetByAccountNumber([FromRoute] int accountId)
+        {
+            var retorno = await _clientService.GetByAccountNumber(accountId);
+
+            return Ok(retorno);
+        }
+
+        [HttpGet("by-name/{name}")]
+        public async Task<ActionResult<List<ClientModel>>> GetByAccountNumber([FromRoute] string name)
+        {
+            var retorno = await _clientService.GetByName(name);
+
+            return Ok(retorno.ToList());
+        }
+
+        [HttpGet("document/{documentoNumber}")]
+        public async Task<ActionResult<List<ClientModel>>> GetByDocumentNumber([FromRoute] string documentoNumber)
+        {
+            var retorno = await _clientService.GetByDocumentNumber(documentoNumber);
+
+            return Ok(retorno.ToList());
+        }
+
+
     }
 }

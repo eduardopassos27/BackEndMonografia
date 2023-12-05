@@ -57,5 +57,37 @@ namespace BackEndMonografia.Repositories
 
 
         }
+
+        public async Task<IEnumerable<CompleteDemandModel>> GetDemandsByClient(int clientId)
+        {
+            var param = new {clientId =  clientId};
+
+            var query = @" SELECT [DemandId]
+                          ,demand.[TypeId]
+	                      ,TypeDescription
+                          ,demand.[DescriptionId]
+	                      ,DescriptionText
+                          ,demand.[AreaId]
+	                      ,AreaName
+                          ,demand.[StartDate]
+                          ,[EndDate]
+                          ,demand.[StatusId]
+	                      ,StatusDescription
+                          ,[SystemUser]
+                          ,[ResulutionDeadline]
+                          ,[Solution]
+                          ,[OpeningComment]
+                          ,[FinalComment]
+                          ,[ClientId]
+                      FROM [dbo].[DemandTable] as demand
+                      LEFT JOIN [dbo].[AreaTable] on demand.AreaId = [AreaTable].AreaId
+                      LEFT JOIN [dbo].[DescriptionTable] on demand.DescriptionId = [DescriptionTable].DescriptionId
+                      LEFT JOIN [dbo].TypeTable on demand.TypeId = TypeTable.TypeId
+                      LEFT JOIN [dbo].StatusTable on demand.StatusId = StatusTable.StatusId
+                      where demand.ClientId = @clientId";
+
+            return dbConector.Connection.Query<CompleteDemandModel>(query, param);
+
+        }
     }
 }

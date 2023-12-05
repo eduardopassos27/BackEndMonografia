@@ -22,5 +22,10 @@ namespace BackEndMonografia.Services
         {
             return _demandRepository.GetAll();
         }
+
+        public async Task<IEnumerable<CompleteDemandModel>> GetDemandsByClient(int clientId)
+        {
+            return await _demandRepository.GetDemandsByClient(clientId);
+        }
     }
 }

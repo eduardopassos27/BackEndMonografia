@@ -1,6 +1,7 @@
 ﻿
 using BackEndMonografia.Configuration.Interfaces;
 using BackEndMonografia.Repositories;
+using BackEndMonografia.Repositories.Interfaces;
 using BackEndMonografia.Services;
 using BackEndMonografia.Services.Interfaces;
 using Microsoft.Extensions.Options;
@@ -30,8 +31,18 @@ namespace BackEndMonografia
             services.AddTransient<IDemandService, DemandService>();
             services.AddTransient<ITaxonomyRepository, TaxonomyRepository>();
             services.AddTransient<ITaxonomyService, TaxonomyService>();
+            services.AddTransient<IClientService, ClientService>();
+            services.AddTransient<IClientRepository, ClientRepository>();
             services.Configure<AppSettings>(Configuration);
             services.AddSingleton<IAppSettings>(sp => sp.GetRequiredService<IOptions<AppSettings>>().Value);
+
+
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowMe", options => options.AllowAnyOrigin()
+                                                         .AllowAnyMethod()
+                                                         .AllowAnyHeader());
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -42,6 +53,7 @@ namespace BackEndMonografia
             //    app.UseSwagger();
             //    app.UseSwaggerUI();
             //}
+            app.UseCors("AllowMe");
 
             app.UseHttpsRedirection();
             app.UseRouting();

@@ -7,5 +7,6 @@ namespace BackEndMonografia.Services.Interfaces
     {
         Task<IEnumerable<DemandModel>> GetAll();
         Task<DemandModel> Add(DemandModel model);
+        Task<IEnumerable<CompleteDemandModel>> GetDemandsByClient(int clientId);
     }
 }

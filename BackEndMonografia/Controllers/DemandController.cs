@@ -18,15 +18,23 @@ namespace BackEndMonografia.Controllers
         [HttpGet]
         public async Task<ActionResult<List<DemandModel>>> GetAll()
         {
-            var retorno =  await _demandService.GetAll();
+            var retorno = await _demandService.GetAll();
 
             return Ok(retorno.ToList());
         }
 
         [HttpPost]
-        public async Task<ActionResult<DemandModel>> Add([FromBody]DemandModel model)
+        public async Task<ActionResult<DemandModel>> Add([FromBody] DemandModel model)
         {
             var retorno = await _demandService.Add(model);
+
+            return Ok(retorno);
+        }
+
+        [HttpGet("by-client/{clientId}")]
+        public async Task<ActionResult<List<CompleteDemandModel>>> GetDemandsByClient([FromRoute] int clientId)
+        {
+            var retorno = await _demandService.GetDemandsByClient(clientId);
 
             return Ok(retorno);
         }

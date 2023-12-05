@@ -10,6 +10,7 @@ namespace BackEndMonografia.Models.System
         public string ClientName { get; set; }
         public int AccountNumber { get; set; }
         public string Address { get; set; }
+        public string Documento { get; set; }
 
     }
 }
