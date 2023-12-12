@@ -1,12 +1,12 @@
-﻿using Dapper.Contrib.Extensions;
+﻿
+using System.ComponentModel.DataAnnotations;
 
 namespace BackEndMonografia.Models.System
 {
-    [Table("DescriptionTable")]
     public class DescriptionModel
     {
         public int TypeId { get; set; }
-        [Key]
+        public string? TypeDescription { get; set; }
         public int DescriptionId { get; set; }
         public string DescriptionText { get; set; }
     }

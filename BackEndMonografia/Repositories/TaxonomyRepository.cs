@@ -50,7 +50,88 @@ namespace BackEndMonografia.Repositories
         {
             var sql = @"SELECT * FROM [dbo].[TaxonomyTable]";
 
-            return dbConector.Connection.Query<TaxonomyModel>(sql);
+            return await dbConector.Connection.QueryAsync<TaxonomyModel>(sql);
+        }
+
+        public async Task<IEnumerable<TaxonomyModel>> GetByOrigem(int origemId)
+        {
+            var param = new { OriginId = origemId };
+
+
+            var sql = @"
+                        SELECT [TaxonomyTable].[AreaId]
+                            ,AreaName
+						    ,[TaxonomyTable].[DescriptionId]
+						    ,DescriptionText
+						    ,[TaxonomyTable].[OriginId]
+                            ,OriginDescription
+                            ,TypeDescription
+						    ,[TaxonomyTable].[TypeId]
+                            ,[ResulutionDeadline]
+                            ,[UsedFor]
+                        FROM [dbo].[TaxonomyTable]
+                        LEFT JOIN [AreaTable] ON [AreaTable].AreaId = [TaxonomyTable].AreaId
+					    LEFT JOIN DescriptionTable ON DescriptionTable.DescriptionId = [TaxonomyTable].DescriptionId
+					    LEFT JOIN OriginTable ON OriginTable.OriginId = [TaxonomyTable].OriginId
+					    LEFT JOIN TypeTable ON TypeTable.[TypeId] = [TaxonomyTable].[TypeId]
+                       WHERE TaxonomyTable.OriginId = @OriginId";
+
+           return await dbConector.Connection.QueryAsync<TaxonomyModel>(sql, param);
+        }
+
+        public async Task<IEnumerable<TaxonomyModel>> GetByOrigemAndType(int origemId, int typeId)
+        {
+            var param = new { OriginId = origemId, TypeId = typeId };
+
+
+            var sql = @"
+                        SELECT [TaxonomyTable].[AreaId]
+                            ,AreaName
+						    ,[TaxonomyTable].[DescriptionId]
+						    ,DescriptionText
+						    ,[TaxonomyTable].[OriginId]
+                            ,OriginDescription
+                            ,TypeDescription
+						    ,[TaxonomyTable].[TypeId]
+                            ,[ResulutionDeadline]
+                            ,[UsedFor]
+                        FROM [dbo].[TaxonomyTable]
+                        LEFT JOIN [AreaTable] ON [AreaTable].AreaId = [TaxonomyTable].AreaId
+					    LEFT JOIN DescriptionTable ON DescriptionTable.DescriptionId = [TaxonomyTable].DescriptionId
+					    LEFT JOIN OriginTable ON OriginTable.OriginId = [TaxonomyTable].OriginId
+					    LEFT JOIN TypeTable ON TypeTable.[TypeId] = [TaxonomyTable].[TypeId]
+                       WHERE TaxonomyTable.OriginId = @OriginId 
+                            and TaxonomyTable.TypeId = @TypeId ";
+
+            return await dbConector.Connection.QueryAsync<TaxonomyModel>(sql, param);
+        }
+
+        public async Task<IEnumerable<TaxonomyModel>> GetByOrigemAndTypeAndDescription(int origemId, int typeId, int descriptionId)
+        {
+            var param = new { OriginId = origemId, TypeId = typeId, DescriptionId = descriptionId };
+
+
+            var sql = @"
+                        SELECT [TaxonomyTable].[AreaId]
+                            ,AreaName
+						    ,[TaxonomyTable].[DescriptionId]
+						    ,DescriptionText
+						    ,[TaxonomyTable].[OriginId]
+                            ,OriginDescription
+                            ,TypeDescription
+						    ,[TaxonomyTable].[TypeId]
+                            ,[ResulutionDeadline]
+                            ,[UsedFor]
+                        FROM [dbo].[TaxonomyTable]
+                        LEFT JOIN [AreaTable] ON [AreaTable].AreaId = [TaxonomyTable].AreaId
+					    LEFT JOIN DescriptionTable ON DescriptionTable.DescriptionId = [TaxonomyTable].DescriptionId
+					    LEFT JOIN OriginTable ON OriginTable.OriginId = [TaxonomyTable].OriginId
+					    LEFT JOIN TypeTable ON TypeTable.[TypeId] = [TaxonomyTable].[TypeId]
+                       WHERE TaxonomyTable.OriginId = @OriginId 
+                            and TaxonomyTable.TypeId = @TypeId 
+                            and TaxonomyTable.DescriptionId = @DescriptionId";
+
+            return await dbConector.Connection.QueryAsync<TaxonomyModel>(sql, param);
         }
     }
 }

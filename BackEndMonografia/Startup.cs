@@ -33,6 +33,8 @@ namespace BackEndMonografia
             services.AddTransient<ITaxonomyService, TaxonomyService>();
             services.AddTransient<IClientService, ClientService>();
             services.AddTransient<IClientRepository, ClientRepository>();
+            services.AddTransient<IDescriptionRepository, DescriptionRepository>();
+            services.AddTransient<IDescriptionService, DescriptionService>();
             services.Configure<AppSettings>(Configuration);
             services.AddSingleton<IAppSettings>(sp => sp.GetRequiredService<IOptions<AppSettings>>().Value);
 

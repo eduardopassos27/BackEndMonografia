@@ -29,6 +29,7 @@ namespace BackEndMonografia.Repositories
             param.Add("ResulutionDeadline", model.ResulutionDeadline, DbType.Int32, ParameterDirection.Input);
             param.Add("OpeningComment", model.OpeningComment, DbType.String, ParameterDirection.Input);
             param.Add("ClientId", model.ClientId, DbType.Int32, ParameterDirection.Input);
+            param.Add("OriginId", model.OriginId, DbType.Int32, ParameterDirection.Input);
 
             var sql = @"INSERT INTO [dbo].[DemandTable]
                                     ([TypeId]
@@ -39,7 +40,8 @@ namespace BackEndMonografia.Repositories
                                     ,[SystemUser]
                                     ,[ResulutionDeadline]
                                     ,[OpeningComment]
-                                    ,[ClientId])
+                                    ,[ClientId]
+                                    ,[OriginId])
                                      OUTPUT INSERTED.*
                                 VALUES
                                     (@TypeId
@@ -50,7 +52,8 @@ namespace BackEndMonografia.Repositories
                                     ,@SystemUser
                                     ,@ResulutionDeadline
                                     ,@OpeningComment
-                                    ,@ClientId)";
+                                    ,@ClientId
+                                    ,@OriginId)";
 
             return dbConector.Connection.Query<DemandModel>(sql, param).First();
 
@@ -65,6 +68,8 @@ namespace BackEndMonografia.Repositories
             var query = @" SELECT [DemandId]
                           ,demand.[TypeId]
 	                      ,TypeDescription
+                          ,demand.[OriginId]
+	                      ,OriginDescription
                           ,demand.[DescriptionId]
 	                      ,DescriptionText
                           ,demand.[AreaId]
@@ -84,6 +89,7 @@ namespace BackEndMonografia.Repositories
                       LEFT JOIN [dbo].[DescriptionTable] on demand.DescriptionId = [DescriptionTable].DescriptionId
                       LEFT JOIN [dbo].TypeTable on demand.TypeId = TypeTable.TypeId
                       LEFT JOIN [dbo].StatusTable on demand.StatusId = StatusTable.StatusId
+                      LEFT JOIN [dbo].OriginTable on demand.OriginId = OriginTable.OriginId
                       where demand.ClientId = @clientId";
 
             return dbConector.Connection.Query<CompleteDemandModel>(query, param);

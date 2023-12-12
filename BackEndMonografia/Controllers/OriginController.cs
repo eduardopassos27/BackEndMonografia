@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace BackEndMonografia.Controllers
 {
     [ApiController]
-    [Route("v1/origin")]
+    [Route("v1/origins")]
     public class OriginController : ControllerBase
     {
         private readonly IBaseService<OriginModel> _baseService;

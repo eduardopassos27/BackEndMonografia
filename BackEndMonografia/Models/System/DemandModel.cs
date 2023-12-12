@@ -6,6 +6,7 @@ namespace BackEndMonografia.Models.System
         public long DemandId { get; set; }
         public int TypeId { get; set; }
         public int DescriptionId { get; set; }
+        public int OriginId { get; set; }
         public int AreaId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
@@ -24,6 +25,8 @@ namespace BackEndMonografia.Models.System
         public string DescriptionText { get; set; }
         public string AreaName { get; set; }
         public string StatusDescription { get; set; }
+
+        public string OriginDescription { get; set; }
 
     }
 

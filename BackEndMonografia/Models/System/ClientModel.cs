@@ -11,6 +11,7 @@ namespace BackEndMonografia.Models.System
         public int AccountNumber { get; set; }
         public string Address { get; set; }
         public string Documento { get; set; }
+        public string SegmentoId { get; set; }
 
     }
 }
