@@ -1,11 +1,12 @@
-﻿using BackEndMonografia.Models.System;
+﻿using BackEndMonografia.Dtos;
+using BackEndMonografia.Models;
 
 namespace BackEndMonografia.Repositories.Interfaces
 {
     public interface IClientRepository
     {
-        Task<ClientModel> GetByAccountNumber(int id);
-        Task<IEnumerable<ClientModel>> GetByDocumentNumber(string documentoNumber);
-        Task<IEnumerable<ClientModel>> GetByName(string name);
+        Task<ClienteCompleteResponseDto> GetByAccountNumber(int id);
+        Task<IEnumerable<ClienteCompleteResponseDto>> GetByDocumentNumber(string documentoNumber);
+        Task<IEnumerable<ClienteCompleteResponseDto>> GetByName(string name);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Dapper.Contrib.Extensions;
 
-namespace BackEndMonografia.Models.System
+namespace BackEndMonografia.Models
 {
     [Table("OriginTable")]
     public class OriginModel

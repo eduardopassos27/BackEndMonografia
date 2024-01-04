@@ -1,14 +1,12 @@
-﻿
+﻿using Dapper.Contrib.Extensions;
 
-using Dapper.Contrib.Extensions;
-
-namespace BackEndMonografia.Models.System
+namespace BackEndMonografia.Models
 {
     [Table("SegmentTable")]
     public class SegmentModel
     {
         [Key]
-        public int id {  get; set; }
+        public int id { get; set; }
 
         public string descricao { get; set; }
     }

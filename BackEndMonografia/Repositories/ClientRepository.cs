@@ -1,4 +1,5 @@
-﻿using BackEndMonografia.Models.System;
+﻿using BackEndMonografia.Dtos;
+using BackEndMonografia.Models;
 using BackEndMonografia.Repositories.Interfaces;
 using Dapper;
 using System.Data;
@@ -13,30 +14,87 @@ namespace BackEndMonografia.Repositories
         {
             this.dbConector = dbConector;
         }
-        public async Task<ClientModel> GetByAccountNumber(int id)
+        public async Task<ClienteCompleteResponseDto> GetByAccountNumber(int id)
         {
-            var param = new {ID = id};
+            var param = new { NUM_CONTA = id};
 
-            var query = @"SELECT * FROM [ClientTable] WHERE [AccountNumber] = @ID";
+            var query = @"SELECT [TB_CLIENTES].[ID_CLIENTE]
+                          ,[NOME_CLIENTE]
+                          ,[DOCUMENTO]
+                          ,[TB_CLIENTES].[ID_SEGMENTO]
+	                      ,[TB_SEGMENTOS].NM_SEGMENTO
+						  ,TB_AGENCIAS.NM_AGENCIA
+                          ,[TB_CLIENTES].[ID_ENDERECO]
+                          ,TB_ENDERECO.CIDADE
+                          ,TB_ENDERECO.ESTADO
+                          ,TB_ENDERECO.LOGRADOURO	  
+                          ,TB_ENDERECO.NUMERO
 
-            return dbConector.Connection.QueryFirst<ClientModel>(query, param);
+	                    FROM [dbo].[TB_CLIENTES]
+
+	                    LEFT JOIN TB_ENDERECO ON TB_ENDERECO.ID_ENDERECO = [TB_CLIENTES].[ID_ENDERECO]
+	                    LEFT JOIN TB_SEGMENTOS ON TB_SEGMENTOS.[ID_SEGMENTO] = [TB_CLIENTES].[ID_SEGMENTO]
+	                    LEFT JOIN TB_CONTA_CLIENTES ON TB_CONTA_CLIENTES.ID_CLIENTE = [TB_CLIENTES].[ID_CLIENTE]
+						LEFT JOIN TB_AGENCIAS ON TB_AGENCIAS.ID_AGENCIA = TB_CLIENTES.ID_AGENCIA
+
+	                    WHERE TB_CONTA_CLIENTES.NUM_CONTA = @NUM_CONTA";
+
+            return dbConector.Connection.QueryFirst<ClienteCompleteResponseDto>(query, param);
 
         }
 
-        public async Task<IEnumerable<ClientModel>> GetByDocumentNumber(string documentoNumber)
+        public async Task<IEnumerable<ClienteCompleteResponseDto>> GetByDocumentNumber(string documentoNumber)
         {
             var param = new { DOC = documentoNumber };
 
-            var query = @$"SELECT * FROM [ClientTable] WHERE [Documento] = @DOC ";
+            var query = @$"SELECT [TB_CLIENTES].[ID_CLIENTE]
+                          ,[NOME_CLIENTE]
+                          ,[DOCUMENTO]
+                          ,[TB_CLIENTES].[ID_SEGMENTO]
+	                      ,[TB_SEGMENTOS].NM_SEGMENTO
+						  ,TB_AGENCIAS.NM_AGENCIA
+                          ,[TB_CLIENTES].[ID_ENDERECO]
+                          ,TB_ENDERECO.CIDADE
+                          ,TB_ENDERECO.ESTADO
+                          ,TB_ENDERECO.LOGRADOURO	  
+                          ,TB_ENDERECO.NUMERO
 
-            return dbConector.Connection.Query<ClientModel>(query,param);
+	                    FROM [dbo].[TB_CLIENTES]
+
+	                    LEFT JOIN TB_ENDERECO ON TB_ENDERECO.ID_ENDERECO = [TB_CLIENTES].[ID_ENDERECO]
+	                    LEFT JOIN TB_SEGMENTOS ON TB_SEGMENTOS.[ID_SEGMENTO] = [TB_CLIENTES].[ID_SEGMENTO]
+	                    LEFT JOIN TB_CONTA_CLIENTES ON TB_CONTA_CLIENTES.ID_CLIENTE = [TB_CLIENTES].[ID_CLIENTE]
+						LEFT JOIN TB_AGENCIAS ON TB_AGENCIAS.ID_AGENCIA = TB_CLIENTES.ID_AGENCIA
+
+                        WHERE [DOCUMENTO] = @DOC ";
+
+            return dbConector.Connection.Query<ClienteCompleteResponseDto>(query,param);
         }
 
-        public async Task<IEnumerable<ClientModel>> GetByName(string name)
+        public async Task<IEnumerable<ClienteCompleteResponseDto>> GetByName(string name)
         {
-            var query = @$"SELECT * FROM [ClientTable] WHERE ClientName LIKE '%{name}%' ";
+            var query = @$"SELECT [TB_CLIENTES].[ID_CLIENTE]
+                          ,[NOME_CLIENTE]
+                          ,[DOCUMENTO]
+                          ,[TB_CLIENTES].[ID_SEGMENTO]
+	                      ,[TB_SEGMENTOS].NM_SEGMENTO
+						  ,TB_AGENCIAS.NM_AGENCIA
+                          ,[TB_CLIENTES].[ID_ENDERECO]
+                          ,TB_ENDERECO.CIDADE
+                          ,TB_ENDERECO.ESTADO
+                          ,TB_ENDERECO.LOGRADOURO	  
+                          ,TB_ENDERECO.NUMERO
 
-            return dbConector.Connection.Query<ClientModel>(query);
+	                    FROM [dbo].[TB_CLIENTES]
+
+	                    LEFT JOIN TB_ENDERECO ON TB_ENDERECO.ID_ENDERECO = [TB_CLIENTES].[ID_ENDERECO]
+	                    LEFT JOIN TB_SEGMENTOS ON TB_SEGMENTOS.[ID_SEGMENTO] = [TB_CLIENTES].[ID_SEGMENTO]
+	                    LEFT JOIN TB_CONTA_CLIENTES ON TB_CONTA_CLIENTES.ID_CLIENTE = [TB_CLIENTES].[ID_CLIENTE]
+						LEFT JOIN TB_AGENCIAS ON TB_AGENCIAS.ID_AGENCIA = TB_CLIENTES.ID_AGENCIA
+
+                        WHERE NOME_CLIENTE LIKE '%{name}%' ";
+
+            return dbConector.Connection.Query<ClienteCompleteResponseDto>(query);
         }
     }
 }

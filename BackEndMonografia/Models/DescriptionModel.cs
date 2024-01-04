@@ -1,7 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace BackEndMonografia.Models.System
+namespace BackEndMonografia.Models
 {
     public class DescriptionModel
     {

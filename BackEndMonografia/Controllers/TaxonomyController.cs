@@ -1,4 +1,4 @@
-﻿using BackEndMonografia.Models.System;
+﻿using BackEndMonografia.Models;
 using BackEndMonografia.Services;
 using BackEndMonografia.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;

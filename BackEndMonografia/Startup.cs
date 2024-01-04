@@ -35,9 +35,14 @@ namespace BackEndMonografia
             services.AddTransient<IClientRepository, ClientRepository>();
             services.AddTransient<IDescriptionRepository, DescriptionRepository>();
             services.AddTransient<IDescriptionService, DescriptionService>();
+            services.AddTransient<ICamposAdicionaisRepository, CamposAdicionaisRepository>();
+            services.AddTransient<ICamposAdicionaisService, CamposAdicionaisService>();
+            services.AddTransient<IValorCampoAdicionalRepository, ValorCampoAdicionalRepository>();
+            services.AddTransient<IValorCampoAdicionalService, ValorCampoAdicionalService>();
             services.Configure<AppSettings>(Configuration);
             services.AddSingleton<IAppSettings>(sp => sp.GetRequiredService<IOptions<AppSettings>>().Value);
 
+            services.AddSwaggerGen();
 
             services.AddCors(c =>
             {
@@ -50,11 +55,11 @@ namespace BackEndMonografia
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseSwagger();
-            //    app.UseSwaggerUI();
-            //}
+            if (env.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
             app.UseCors("AllowMe");
 
             app.UseHttpsRedirection();

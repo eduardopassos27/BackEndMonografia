@@ -1,4 +1,4 @@
-﻿using BackEndMonografia.Models.System;
+﻿using BackEndMonografia.Models;
 using System.Threading.Tasks;
 
 namespace BackEndMonografia.Repositories

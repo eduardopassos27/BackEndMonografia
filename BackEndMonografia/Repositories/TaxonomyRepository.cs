@@ -1,5 +1,5 @@
 ﻿using BackEndMonografia.Controllers;
-using BackEndMonografia.Models.System;
+using BackEndMonografia.Models;
 using Dapper;
 using System.Data;
 
@@ -25,19 +25,19 @@ namespace BackEndMonografia.Repositories
             param.Add("ResulutionDeadline", model.ResulutionDeadline, DbType.Int32, ParameterDirection.Input);
             param.Add("UsedFor", model.UsedFor, DbType.String, ParameterDirection.Input);
 
-            var sql = @"INSERT INTO [dbo].[TaxonomyTable]
-                                    ([AreaId]
-                                    ,[DescriptionId]
-                                    ,[OriginId]
-                                    ,[TypeId]
-                                    ,[ResulutionDeadline]
-                                    ,[UsedFor])
+            var sql = @"INSERT INTO [dbo].[TB_TAXONOMIA]
+                                   ([ID_ORIGEM]
+                                   ,[ID_TIPO]
+                                   ,[ID_DESC]
+                                   ,[ID_AREA]
+                                   ,[RESOLUTION_DEADLINE]
+                                   ,[USED_FOR])
 									output inserted.*
                                 VALUES
-                                    (@AreaId
-                                    ,@DescriptionId
-                                    ,@OriginId
+                                    (@OriginId
                                     ,@TypeId
+                                    ,@DescriptionId
+                                    ,@AreaId
                                     ,@ResulutionDeadline
                                     ,@UsedFor)";
 
@@ -48,7 +48,13 @@ namespace BackEndMonografia.Repositories
 
         public async Task<IEnumerable<TaxonomyModel>> GetAll()
         {
-            var sql = @"SELECT * FROM [dbo].[TaxonomyTable]";
+            var sql = @" SELECT * [ID_ORIGEM] AS OriginId
+                              ,[ID_TIPO] AS TypeId
+                              ,[ID_DESC] AS DescriptionId
+                              ,[ID_AREA] AS AreaId
+                              ,[RESOLUTION_DEADLINE] AS ResulutionDeadline
+                              ,[USED_FOR] AS UsedFor
+                          FROM [DB_ATD_CLIENTES].[dbo].[TB_TAXONOMIA]";
 
             return await dbConector.Connection.QueryAsync<TaxonomyModel>(sql);
         }
@@ -58,23 +64,25 @@ namespace BackEndMonografia.Repositories
             var param = new { OriginId = origemId };
 
 
-            var sql = @"
-                        SELECT [TaxonomyTable].[AreaId]
-                            ,AreaName
-						    ,[TaxonomyTable].[DescriptionId]
-						    ,DescriptionText
-						    ,[TaxonomyTable].[OriginId]
-                            ,OriginDescription
-                            ,TypeDescription
-						    ,[TaxonomyTable].[TypeId]
-                            ,[ResulutionDeadline]
-                            ,[UsedFor]
-                        FROM [dbo].[TaxonomyTable]
-                        LEFT JOIN [AreaTable] ON [AreaTable].AreaId = [TaxonomyTable].AreaId
-					    LEFT JOIN DescriptionTable ON DescriptionTable.DescriptionId = [TaxonomyTable].DescriptionId
-					    LEFT JOIN OriginTable ON OriginTable.OriginId = [TaxonomyTable].OriginId
-					    LEFT JOIN TypeTable ON TypeTable.[TypeId] = [TaxonomyTable].[TypeId]
-                       WHERE TaxonomyTable.OriginId = @OriginId";
+            var sql = @" SELECT TB_TAXONOMIA.ID_AREA AS AreaId
+		                    ,NM_AREA AS AreaName
+	                        ,TB_TAXONOMIA.ID_DESC AS DescriptionId
+	                        ,TXT_DESCRICAO AS DescriptionText
+	                        ,TB_TAXONOMIA.ID_ORIGEM AS OriginId
+		                    ,NM_ORIGEM AS OriginDescription
+		                    ,TB_TIPOS.TXT_TIPO AS TypeDescription
+	                        ,TB_TAXONOMIA.ID_TIPO AS TypeId
+		                    ,RESOLUTION_DEADLINE AS ResulutionDeadline
+		                    ,USED_FOR AS UsedFor
+
+                     FROM TB_TAXONOMIA
+
+                     LEFT JOIN TB_AREAS ON TB_AREAS.ID_AREA = TB_TAXONOMIA.ID_AREA
+                     LEFT JOIN TB_DESCRICOES ON TB_DESCRICOES.ID_DESC = TB_TAXONOMIA.ID_DESC
+                     LEFT JOIN TB_ORIGENS ON TB_ORIGENS.ID_ORIGEM = TB_TAXONOMIA.ID_ORIGEM
+                     LEFT JOIN TB_TIPOS ON TB_TIPOS.ID_TIPO = TB_TAXONOMIA.ID_TIPO
+
+                    WHERE TB_TAXONOMIA.ID_ORIGEM = @OriginId ";
 
            return await dbConector.Connection.QueryAsync<TaxonomyModel>(sql, param);
         }
@@ -84,24 +92,26 @@ namespace BackEndMonografia.Repositories
             var param = new { OriginId = origemId, TypeId = typeId };
 
 
-            var sql = @"
-                        SELECT [TaxonomyTable].[AreaId]
-                            ,AreaName
-						    ,[TaxonomyTable].[DescriptionId]
-						    ,DescriptionText
-						    ,[TaxonomyTable].[OriginId]
-                            ,OriginDescription
-                            ,TypeDescription
-						    ,[TaxonomyTable].[TypeId]
-                            ,[ResulutionDeadline]
-                            ,[UsedFor]
-                        FROM [dbo].[TaxonomyTable]
-                        LEFT JOIN [AreaTable] ON [AreaTable].AreaId = [TaxonomyTable].AreaId
-					    LEFT JOIN DescriptionTable ON DescriptionTable.DescriptionId = [TaxonomyTable].DescriptionId
-					    LEFT JOIN OriginTable ON OriginTable.OriginId = [TaxonomyTable].OriginId
-					    LEFT JOIN TypeTable ON TypeTable.[TypeId] = [TaxonomyTable].[TypeId]
-                       WHERE TaxonomyTable.OriginId = @OriginId 
-                            and TaxonomyTable.TypeId = @TypeId ";
+            var sql = @"     SELECT TB_TAXONOMIA.ID_AREA AS AreaId
+		                    ,NM_AREA AS AreaName
+	                        ,TB_TAXONOMIA.ID_DESC AS DescriptionId
+	                        ,TXT_DESCRICAO AS DescriptionText
+	                        ,TB_TAXONOMIA.ID_ORIGEM AS OriginId
+		                    ,NM_ORIGEM AS OriginDescription
+		                    ,TB_TIPOS.TXT_TIPO AS TypeDescription
+	                        ,TB_TAXONOMIA.ID_TIPO AS TypeId
+		                    ,RESOLUTION_DEADLINE AS ResulutionDeadline
+		                    ,USED_FOR AS UsedFor
+
+                     FROM TB_TAXONOMIA
+
+                     LEFT JOIN TB_AREAS ON TB_AREAS.ID_AREA = TB_TAXONOMIA.ID_AREA
+                     LEFT JOIN TB_DESCRICOES ON TB_DESCRICOES.ID_DESC = TB_TAXONOMIA.ID_DESC
+                     LEFT JOIN TB_ORIGENS ON TB_ORIGENS.ID_ORIGEM = TB_TAXONOMIA.ID_ORIGEM
+                     LEFT JOIN TB_TIPOS ON TB_TIPOS.ID_TIPO = TB_TAXONOMIA.ID_TIPO
+
+                    WHERE TB_TAXONOMIA.ID_ORIGEM = @OriginId 
+                         and TB_TAXONOMIA.ID_TIPO = @TypeId  ";
 
             return await dbConector.Connection.QueryAsync<TaxonomyModel>(sql, param);
         }
@@ -111,25 +121,28 @@ namespace BackEndMonografia.Repositories
             var param = new { OriginId = origemId, TypeId = typeId, DescriptionId = descriptionId };
 
 
-            var sql = @"
-                        SELECT [TaxonomyTable].[AreaId]
-                            ,AreaName
-						    ,[TaxonomyTable].[DescriptionId]
-						    ,DescriptionText
-						    ,[TaxonomyTable].[OriginId]
-                            ,OriginDescription
-                            ,TypeDescription
-						    ,[TaxonomyTable].[TypeId]
-                            ,[ResulutionDeadline]
-                            ,[UsedFor]
-                        FROM [dbo].[TaxonomyTable]
-                        LEFT JOIN [AreaTable] ON [AreaTable].AreaId = [TaxonomyTable].AreaId
-					    LEFT JOIN DescriptionTable ON DescriptionTable.DescriptionId = [TaxonomyTable].DescriptionId
-					    LEFT JOIN OriginTable ON OriginTable.OriginId = [TaxonomyTable].OriginId
-					    LEFT JOIN TypeTable ON TypeTable.[TypeId] = [TaxonomyTable].[TypeId]
-                       WHERE TaxonomyTable.OriginId = @OriginId 
-                            and TaxonomyTable.TypeId = @TypeId 
-                            and TaxonomyTable.DescriptionId = @DescriptionId";
+            var sql = @"     SELECT TB_TAXONOMIA.ID_AREA AS AreaId
+		                    ,NM_AREA AS AreaName
+	                        ,TB_TAXONOMIA.ID_DESC AS DescriptionId
+	                        ,TXT_DESCRICAO AS DescriptionText
+	                        ,TB_TAXONOMIA.ID_ORIGEM AS OriginId
+		                    ,NM_ORIGEM AS OriginDescription
+		                    ,TB_TIPOS.TXT_TIPO AS TypeDescription
+	                        ,TB_TAXONOMIA.ID_TIPO AS TypeId
+		                    ,RESOLUTION_DEADLINE AS ResulutionDeadline
+		                    ,USED_FOR AS UsedFor
+
+                             FROM TB_TAXONOMIA
+
+                             LEFT JOIN TB_AREAS ON TB_AREAS.ID_AREA = TB_TAXONOMIA.ID_AREA
+                             LEFT JOIN TB_DESCRICOES ON TB_DESCRICOES.ID_DESC = TB_TAXONOMIA.ID_DESC
+                             LEFT JOIN TB_ORIGENS ON TB_ORIGENS.ID_ORIGEM = TB_TAXONOMIA.ID_ORIGEM
+                             LEFT JOIN TB_TIPOS ON TB_TIPOS.ID_TIPO = TB_TAXONOMIA.ID_TIPO
+
+                             WHERE TB_TAXONOMIA.ID_ORIGEM = @OriginId 
+                             AND TB_TAXONOMIA.ID_TIPO = @TypeId 
+                             AND TB_TAXONOMIA.ID_DESC = @DescriptionId";
+
 
             return await dbConector.Connection.QueryAsync<TaxonomyModel>(sql, param);
         }

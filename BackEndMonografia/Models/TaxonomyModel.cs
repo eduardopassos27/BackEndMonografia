@@ -1,7 +1,7 @@
 ﻿using Dapper.Contrib.Extensions;
 using System.Globalization;
 
-namespace BackEndMonografia.Models.System
+namespace BackEndMonografia.Models
 {
     [Table("TaxonomyTable")]
     public class TaxonomyModel

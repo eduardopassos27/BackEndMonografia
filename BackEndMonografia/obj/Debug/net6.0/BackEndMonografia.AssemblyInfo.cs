@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BackEndMonografia")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2a3abfdb65fe9ba0c1082ee75f5f235f7a7d0106")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+828341e493e9e9d2d80b1cd6e10063947f01813d")]
 [assembly: System.Reflection.AssemblyProductAttribute("BackEndMonografia")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BackEndMonografia")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

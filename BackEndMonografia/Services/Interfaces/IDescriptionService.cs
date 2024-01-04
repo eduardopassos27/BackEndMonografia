@@ -1,5 +1,5 @@
 ﻿
-using BackEndMonografia.Models.System;
+using BackEndMonografia.Models;
 
 namespace BackEndMonografia.Services.Interfaces
 {

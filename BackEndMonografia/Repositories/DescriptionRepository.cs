@@ -1,4 +1,4 @@
-﻿using BackEndMonografia.Models.System;
+﻿using BackEndMonografia.Models;
 using BackEndMonografia.Repositories.Interfaces;
 using Dapper;
 using System;
@@ -18,13 +18,13 @@ namespace BackEndMonografia.Repositories
         {
             var param = new { TYPEID = typeId };
 
-            var query = @"SELECT [DescriptionId]
-                              ,TypeTable.[TypeId]
-							  ,TypeTable.TypeDescription
-                              ,[DescriptionText]
-                          FROM [dbo].[DescriptionTable]
-						  LEFT JOIN TypeTable ON TypeTable.TypeId = [DescriptionTable].TypeId
-                          WHERE TypeTable.[TypeId] = @TYPEID ";
+            var query = @"SELECT [ID_DESC] AS DescriptionId
+                              ,TB_TIPOS.ID_TIPO AS TypeId
+							  ,TB_TIPOS.TXT_TIPO AS TypeDescription
+                              ,[TXT_DESCRICAO] AS DescriptionText
+                          FROM [dbo].[TB_DESCRICOES]
+						  LEFT JOIN TB_TIPOS ON TB_TIPOS.ID_TIPO = TB_DESCRICOES.ID_TIPO
+                          WHERE TB_TIPOS.ID_TIPO = @TYPEID ";
 
             return await this.dbConector.Connection.QueryAsync<DescriptionModel>(query, param);
         }
@@ -32,12 +32,12 @@ namespace BackEndMonografia.Repositories
         public async Task<IEnumerable<DescriptionModel>> GetAllAsync()
         {
 
-            var query = @"SELECT [DescriptionId]
-                              ,TypeTable.[TypeId]
-							  ,TypeTable.TypeDescription
-                              ,[DescriptionText]
-                          FROM [dbo].[DescriptionTable]
-						  LEFT JOIN TypeTable ON TypeTable.TypeId = [DescriptionTable].TypeId";
+            var query = @"SELECT TOP (1000) [ID_DESC] AS DescriptionId
+                              ,[TXT_DESCRICAO] AS DescriptionText
+                              ,[TB_DESCRICOES].[ID_TIPO] AS TypeId
+	                          ,TB_TIPOS.TXT_TIPO AS TypeDescription
+                          FROM [DB_ATD_CLIENTES].[dbo].[TB_DESCRICOES]
+                          LEFT JOIN TB_TIPOS ON  TB_TIPOS.ID_TIPO = [TB_DESCRICOES].ID_TIPO";
 
             return await this.dbConector.Connection.QueryAsync<DescriptionModel>(query);
         }
@@ -46,9 +46,9 @@ namespace BackEndMonografia.Repositories
         {
             var param = new { TypeId = model.TypeId, DescriptionText = model.DescriptionText };
 
-            var query = @"INSERT INTO [dbo].[DescriptionTable]
-                                       ([TypeId]
-                                       ,[DescriptionText])
+            var query = @"INSERT INTO [dbo].[TB_DESCRICOES]
+                                       ([ID_TIPO]
+                                       ,[TXT_DESCRICAO])
                                  OUTPUT INSERTED.*
                                  VALUES
                                        (@TypeId

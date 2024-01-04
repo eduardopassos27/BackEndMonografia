@@ -1,4 +1,5 @@
-﻿using BackEndMonografia.Models.System;
+﻿using BackEndMonografia.Dtos;
+using BackEndMonografia.Models;
 using BackEndMonografia.Repositories.Interfaces;
 using BackEndMonografia.Services.Interfaces;
 using System.Collections.Generic;
@@ -15,19 +16,27 @@ namespace BackEndMonografia.Services
             _clientRepo = clientRepo;
         }
 
-        public Task<ClientModel> GetByAccountNumber(int id)
+        public Task<ClienteCompleteResponseDto> GetByAccountNumber(int id)
         {
             return _clientRepo.GetByAccountNumber(id);
         }
 
-        public async Task<IEnumerable<ClientModel>> GetByDocumentNumber(string documentoNumber)
+        public async Task<IEnumerable<ClienteCompleteResponseDto>> GetByDocumentNumber(string documentoNumber)
         {
-            return await _clientRepo.GetByDocumentNumber(documentoNumber);
+            var retorno = await _clientRepo.GetByDocumentNumber(documentoNumber);
+
+            retorno = retorno.Distinct<ClienteCompleteResponseDto>();
+
+            return retorno;
         }
 
-        public async Task<IEnumerable<ClientModel>> GetByName(string name)
+        public async Task<IEnumerable<ClienteCompleteResponseDto>> GetByName(string name)
         {
-            return await _clientRepo.GetByName(name);
+            var retorno =  await _clientRepo.GetByName(name);
+
+            retorno = retorno.DistinctBy(cliente => cliente.ID_CLIENTE);
+
+            return retorno;
         }
     }
 }

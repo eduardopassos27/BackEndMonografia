@@ -1,4 +1,4 @@
-﻿using BackEndMonografia.Models.System;
+﻿using BackEndMonografia.Models;
 using BackEndMonografia.Repositories;
 using BackEndMonografia.Services.Interfaces;
 

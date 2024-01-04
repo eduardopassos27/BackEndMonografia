@@ -1,4 +1,5 @@
-﻿using BackEndMonografia.Models.System;
+﻿using BackEndMonografia.Dtos;
+using BackEndMonografia.Models;
 using BackEndMonografia.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,15 +9,15 @@ namespace BackEndMonografia.Controllers
     [Route("v1/origins")]
     public class OriginController : ControllerBase
     {
-        private readonly IBaseService<OriginModel> _baseService;
+        private readonly IBaseService<OrigemDto> _baseService;
 
-        public OriginController(IBaseService<OriginModel> baseService)
+        public OriginController(IBaseService<OrigemDto> baseService)
         {
             _baseService = baseService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<OriginModel>>> GetAll() 
+        public async Task<ActionResult<List<OrigemDto>>> GetAll() 
         {
             var result = await _baseService.GetAll();
 
@@ -24,7 +25,7 @@ namespace BackEndMonografia.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<OriginModel>>> InsertDescription(OriginModel model)
+        public async Task<ActionResult<List<OrigemDto>>> InsertDescription(OrigemDto model)
         {
             var result = await _baseService.Add(model);
 

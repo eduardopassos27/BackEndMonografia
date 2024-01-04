@@ -1,4 +1,4 @@
-﻿using BackEndMonografia.Models.System;
+﻿using BackEndMonografia.Models;
 using Dapper;
 using System.Data;
 
@@ -14,7 +14,7 @@ namespace BackEndMonografia.Repositories
         }
         public async Task<IEnumerable<DemandModel>> GetAll()
         {
-            var sql = @"SELECT * FROM [dbo].[DemandTable]";
+            var sql = @"SELECT * FROM [dbo].TB_DEMANDAS";
 
             return dbConector.Connection.Query<DemandModel>(sql);
         }
@@ -31,25 +31,23 @@ namespace BackEndMonografia.Repositories
             param.Add("ClientId", model.ClientId, DbType.Int32, ParameterDirection.Input);
             param.Add("OriginId", model.OriginId, DbType.Int32, ParameterDirection.Input);
 
-            var sql = @"INSERT INTO [dbo].[DemandTable]
-                                    ([TypeId]
-                                    ,[DescriptionId]
-                                    ,[AreaId]
-                                    ,[StartDate]
-                                    ,[StatusId]
-                                    ,[SystemUser]
-                                    ,[ResulutionDeadline]
-                                    ,[OpeningComment]
-                                    ,[ClientId]
-                                    ,[OriginId])
-                                     OUTPUT INSERTED.*
+            var sql = @"INSERT INTO [dbo].[TB_DEMANDAS]
+                                       ([ID_TIPO]
+                                       ,[ID_DESC]
+                                       ,[ID_AREA]
+                                       ,[DT_INICIO]
+                                       ,[ID_STATUS]
+                                       ,[PRAZO_RESOLUCAO]
+                                       ,[COMENTARIO_ABERTURA]
+                                       ,[ID_CLIENTE]
+                                       ,[ID_ORIGEM])
+                                     OUTPUT INSERTED.ID_DEMANDA AS DemandId
                                 VALUES
                                     (@TypeId
                                     ,@DescriptionId
                                     ,@AreaId
                                     ,GETDATE()
                                     ,1
-                                    ,@SystemUser
                                     ,@ResulutionDeadline
                                     ,@OpeningComment
                                     ,@ClientId
@@ -65,32 +63,31 @@ namespace BackEndMonografia.Repositories
         {
             var param = new {clientId =  clientId};
 
-            var query = @" SELECT [DemandId]
-                          ,demand.[TypeId]
-	                      ,TypeDescription
-                          ,demand.[OriginId]
-	                      ,OriginDescription
-                          ,demand.[DescriptionId]
-	                      ,DescriptionText
-                          ,demand.[AreaId]
-	                      ,AreaName
-                          ,demand.[StartDate]
-                          ,[EndDate]
-                          ,demand.[StatusId]
-	                      ,StatusDescription
-                          ,[SystemUser]
-                          ,[ResulutionDeadline]
-                          ,[Solution]
-                          ,[OpeningComment]
-                          ,[FinalComment]
-                          ,[ClientId]
-                      FROM [dbo].[DemandTable] as demand
-                      LEFT JOIN [dbo].[AreaTable] on demand.AreaId = [AreaTable].AreaId
-                      LEFT JOIN [dbo].[DescriptionTable] on demand.DescriptionId = [DescriptionTable].DescriptionId
-                      LEFT JOIN [dbo].TypeTable on demand.TypeId = TypeTable.TypeId
-                      LEFT JOIN [dbo].StatusTable on demand.StatusId = StatusTable.StatusId
-                      LEFT JOIN [dbo].OriginTable on demand.OriginId = OriginTable.OriginId
-                      where demand.ClientId = @clientId";
+            var query = @" SELECT [ID_DEMANDA] as DemandId
+                          ,demand.[ID_TIPO] as TypeId
+	                      ,[TXT_TIPO] as TypeDescription
+                          ,demand.[ID_ORIGEM] as OriginId
+	                      ,[NM_ORIGEM] as OriginDescription
+                          ,demand.[ID_DEMANDA] as DescriptionId
+	                      ,[TXT_DESCRICAO] as DescriptionText
+                          ,demand.[ID_AREA] as AreaId
+	                      ,[NM_AREA] as AreaName
+                          ,demand.[DT_INICIO] as StartDate
+                          ,DT_FIM as EndDate
+                          ,demand.[ID_STATUS] as StatusId
+	                      ,[NM_STATUS] as StatusDescription
+                          ,[PRAZO_RESOLUCAO] as ResulutionDeadline
+                          ,[SOLUCAO] as Solution
+                          ,[COMENTARIO_ABERTURA] as OpeningComment
+                          ,[COMENTARIO_FINAL] as FinalComment
+                          ,[ID_CLIENTE] as ClientId
+                      FROM TB_DEMANDAS as demand
+                      LEFT JOIN  [dbo].[TB_AREAS] on demand.ID_AREA = [TB_AREAS].[ID_AREA]
+                      LEFT JOIN [dbo].[TB_DESCRICOES] on demand.[ID_DESC] = [TB_DESCRICOES].[ID_DESC]
+                      LEFT JOIN [dbo].[TB_TIPOS] on demand.[ID_TIPO] = TB_TIPOS.[ID_TIPO]
+                      LEFT JOIN TB_STATUS on demand.[ID_STATUS] = [TB_STATUS].[ID_STATUS]
+                      LEFT JOIN [dbo].[TB_ORIGENS] on demand.[ID_ORIGEM] = TB_ORIGENS.[ID_ORIGEM]
+                      where demand.[ID_CLIENTE] = @clientId";
 
             return dbConector.Connection.Query<CompleteDemandModel>(query, param);
 
