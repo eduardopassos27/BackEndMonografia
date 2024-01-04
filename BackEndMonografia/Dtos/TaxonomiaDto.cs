@@ -2,7 +2,7 @@
 
 namespace BackEndMonografia.Dtos
 {
-    [Table("TB_TAXONOMIA")]
+    [Table("TB_TAXONOMIAS")]
     public class TaxonomiaDto
     {
         [Key]
@@ -16,8 +16,8 @@ namespace BackEndMonografia.Dtos
 
         public int? ID_AREA { get; set; }
 
-        public int? RESOLUTION_DEADLINE { get; set; }
+        public int? PRAZO_RESOLUCAO { get; set; }
 
-        public string USED_FOR { get; set; }
+        public string USADO_PARA { get; set; }
     }
 }

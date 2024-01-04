@@ -2,7 +2,7 @@
 
 namespace BackEndMonografia.Dtos
 {
-    [Table("TB_VALOR_CAMPO_ADICIONAL")]
+    [Table("TB_VALOR_CAMPOS_ADICIONAIS")]
     public class ValorCampoAdicionalDto
     {
         [Key]

@@ -16,12 +16,12 @@ namespace BackEndMonografia.Services
             _clientRepo = clientRepo;
         }
 
-        public Task<ClienteCompleteResponseDto> GetByAccountNumber(int id)
+        public Task<ClienteCompleteResponseDto> ObterPeloNumeroDaConta(int id)
         {
             return _clientRepo.GetByAccountNumber(id);
         }
 
-        public async Task<IEnumerable<ClienteCompleteResponseDto>> GetByDocumentNumber(string documentoNumber)
+        public async Task<IEnumerable<ClienteCompleteResponseDto>> ObterPeloNumeroDoDocumento(string documentoNumber)
         {
             var retorno = await _clientRepo.GetByDocumentNumber(documentoNumber);
 
@@ -30,7 +30,7 @@ namespace BackEndMonografia.Services
             return retorno;
         }
 
-        public async Task<IEnumerable<ClienteCompleteResponseDto>> GetByName(string name)
+        public async Task<IEnumerable<ClienteCompleteResponseDto>> ObterPeloNomeDoCliente(string name)
         {
             var retorno =  await _clientRepo.GetByName(name);
 

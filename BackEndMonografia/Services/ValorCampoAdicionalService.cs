@@ -13,7 +13,7 @@ namespace BackEndMonografia.Services
             _valorCampoAdicionalRepository = valorCampoAdicionalRepository;
         }
 
-        public async Task<bool> InsertAsync(List<ValorCampoAdicionalDto> dtos)
+        public async Task<bool> Adicionar(List<ValorCampoAdicionalDto> dtos)
         {
             var listReturn = new List<bool>();
 

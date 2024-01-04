@@ -12,7 +12,6 @@
         public int StatusId { get; set; }
         public string? SystemUser { get; set; }
         public int ResulutionDeadline { get; set; }
-        public string? Solution { get; set; }
         public string? OpeningComment { get; set; }
         public string? FinalComment { get; set; }
         public int ClientId { get; set; }

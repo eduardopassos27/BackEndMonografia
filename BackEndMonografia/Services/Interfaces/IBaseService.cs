@@ -2,9 +2,9 @@
 {
     public interface IBaseService<T> where T : class
     {
-        Task<T> GetById(int id);
-        Task<IEnumerable<T>> GetAll();
-        Task<int> Add(T entity);
-        Task<bool> Update(T entity);
+        Task<T> ObterPorId(int id);
+        Task<IEnumerable<T>> ObterTodos();
+        Task<int> Adicionar(T entity);
+        Task<bool> Atualizar(T entity);
     }
 }

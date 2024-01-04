@@ -4,6 +4,6 @@ namespace BackEndMonografia.Services.Interfaces
 {
     public interface IValorCampoAdicionalService
     {
-        Task<bool> InsertAsync(List<ValorCampoAdicionalDto> dto);
+        Task<bool> Adicionar(List<ValorCampoAdicionalDto> dto);
     }
 }

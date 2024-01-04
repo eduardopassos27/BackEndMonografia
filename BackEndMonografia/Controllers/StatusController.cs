@@ -18,16 +18,16 @@ namespace BackEndMonografia.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<StatusDto>>> GetAllAreas()
+        public async Task<ActionResult<List<StatusDto>>> ObterTodos()
         {
-            var retorno = await _baseService.GetAll();
+            var retorno = await _baseService.ObterTodos();
 
             return Ok(retorno.ToList());
         }
         [HttpPost]
-        public async Task<ActionResult<int>> InserArea([FromBody] StatusDto model)
+        public async Task<ActionResult<int>> Adicionar([FromBody] StatusDto model)
         {
-            var retorno = await _baseService.Add(model);
+            var retorno = await _baseService.Adicionar(model);
 
             return Ok(retorno);
         }

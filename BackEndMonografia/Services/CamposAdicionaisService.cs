@@ -13,11 +13,11 @@ namespace BackEndMonografia.Services
             _camposAdicionaisRepository = camposAdicionaisRepository;
         }
 
-        public async Task<bool> InsertCampoAdicionalAsync(List<CamposAdicionaisDto> dtos)
+        public async Task<bool> AdicionarCampoAdicionalAsync(List<CamposAdicionaisDto> dtos)
         {
             foreach(var dto in dtos)
             {
-                await _camposAdicionaisRepository.InsertCampoAdicionalAsync(dto);
+                await _camposAdicionaisRepository.AdicionarCampoAdicionalAsync(dto);
             }
             return true;
         }

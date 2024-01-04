@@ -16,22 +16,22 @@ namespace BackEndMonografia.Repositories
             _baseRepository = baseRepository;
             this.dbConector = dbConector;
         }
-        public async Task<IEnumerable<TypeModel>> GetAll()
+        public async Task<IEnumerable<TypeModel>> ObterTodos()
         {
-            return await _baseRepository.GetAll();
+            return await _baseRepository.ObterTodos();
         }
 
-        public async Task<TypeModel> GetById(int id)
+        public async Task<TypeModel> ObterPorId(int id)
         {
-            return await _baseRepository.GetById(id);
+            return await _baseRepository.ObterPorId(id);
         }
-        public async Task<int> Add(TypeModel model)
+        public async Task<int> Adicionar(TypeModel model)
         {
-            return await _baseRepository.Add(model);
+            return await _baseRepository.Adicionar(model);
         }
-        public async Task<bool> Update(TypeModel entity)
+        public async Task<bool> Atualizar(TypeModel entity)
         {
-            return await _baseRepository.Update(entity);
+            return await _baseRepository.Atualizar(entity);
         }
     }
 }

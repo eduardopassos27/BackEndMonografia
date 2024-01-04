@@ -16,9 +16,9 @@ namespace BackEndMonografia.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> InsertAsync(List<ValorCampoAdicionalDto> dtos)
+        public async Task<ActionResult> Adicionar(List<ValorCampoAdicionalDto> dtos)
         {
-            var result = await _valorCampoAdicionalService.InsertAsync(dtos);
+            var result = await _valorCampoAdicionalService.Adicionar(dtos);
 
             if(result)
                 return Ok(result);

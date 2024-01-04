@@ -18,7 +18,7 @@ namespace BackEndMonografia.Repositories
         {
             var param = new { ID_DEMANDA = dto.ID_DEMANDA, ID_CAMPO = dto.ID_CAMPO, TXT_VALOR = dto.TXT_VALOR };
             
-            var sql = @"INSERT INTO [dbo].[TB_VALOR_CAMPO_ADICIONAL]
+            var sql = @"INSERT INTO [dbo].[TB_VALOR_CAMPOS_ADICIONAIS]
                                    ([ID_DEMANDA]
                                    ,[ID_CAMPO]
                                    ,[TXT_VALOR])

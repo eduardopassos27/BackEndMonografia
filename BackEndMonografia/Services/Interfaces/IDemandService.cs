@@ -5,8 +5,8 @@ namespace BackEndMonografia.Services.Interfaces
 {
     public interface IDemandService
     {
-        Task<IEnumerable<DemandModel>> GetAll();
-        Task<DemandModel> Add(DemandModel model);
-        Task<IEnumerable<CompleteDemandModel>> GetDemandsByClient(int clientId);
+        Task<IEnumerable<DemandModel>> ObterTodas();
+        Task<DemandModel> Adicionar(DemandModel model);
+        Task<IEnumerable<CompleteDemandModel>> ObterDemandasPorClienteId(int clientId);
     }
 }

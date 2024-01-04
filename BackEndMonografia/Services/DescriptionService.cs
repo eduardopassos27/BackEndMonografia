@@ -14,17 +14,17 @@ namespace BackEndMonografia.Services
             _descriptionRepository = descriptionRepository;
         }
 
-        public async Task<IEnumerable<DescriptionModel>> GetAllAsync()
+        public async Task<IEnumerable<DescriptionModel>> ObterTodos()
         {
             return await _descriptionRepository.GetAllAsync();
         }
 
-        public async Task<IEnumerable<DescriptionModel>> GetByTypeId(int typeId)
+        public async Task<IEnumerable<DescriptionModel>> ObterPorTipoId(int typeId)
         {
             return await _descriptionRepository.GetByTypeId(typeId);
         }
 
-        public async Task<DescriptionModel> InsertAsync(DescriptionModel model)
+        public async Task<DescriptionModel> Adicionar(DescriptionModel model)
         {
             return await _descriptionRepository.InsertAsync(model);
         }

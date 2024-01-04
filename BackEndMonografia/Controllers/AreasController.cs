@@ -8,26 +8,27 @@ namespace BackEndMonografia.Controllers
 {
     [ApiController]
     [Route("v1/areas")]
-    public class AreaController : ControllerBase
+    public class AreasController : ControllerBase
     {
         private readonly IBaseService<AreaDto> _baseService;
 
-        public AreaController(IBaseService<AreaDto> baseService)
+        public AreasController(IBaseService<AreaDto> baseService)
         {
             _baseService = baseService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<AreaDto>>> GetAllAreas()
+        ///
+        public async Task<ActionResult<List<AreaDto>>> ObterTodasAreas()
         {
-            var retorno = await _baseService.GetAll();
+            var retorno = await _baseService.ObterTodos();
 
             return Ok(retorno.ToList());
         }
         [HttpPost]
-        public async Task<ActionResult<int>> InserArea([FromBody] AreaDto model)
+        public async Task<ActionResult<int>> AdicionarArea([FromBody] AreaDto model)
         {
-            var retorno = await _baseService.Add(model);
+            var retorno = await _baseService.Adicionar(model);
 
             return Ok(retorno);
         }

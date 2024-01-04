@@ -15,7 +15,7 @@ namespace BackEndMonografia.Controllers
             _camposAdicionaiService = camposAdicionaiService;
         }
 
-        [HttpGet("origem/{idOrigem}/tipo/{tipoId}/descricao/{descricaoId}")]
+        [HttpGet("origens/{idOrigem}/tipos/{tipoId}/descricoes/{descricaoId}")]
         public async Task<ActionResult<List<CamposAdicionaisDto>>> ObterCamposAsync([FromRoute] int idOrigem,
                                                                               [FromRoute] int tipoId,
                                                                               [FromRoute] int descricaoId)
@@ -26,9 +26,9 @@ namespace BackEndMonografia.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<CamposAdicionaisDto>>> InsertCampoAdicionalAsync([FromBody] List<CamposAdicionaisDto> dtos)
+        public async Task<ActionResult<List<CamposAdicionaisDto>>> AdicionarCampoAdicionalAsync([FromBody] List<CamposAdicionaisDto> dtos)
         {
-            var retorno = await _camposAdicionaiService.InsertCampoAdicionalAsync(dtos);
+            var retorno = await _camposAdicionaiService.AdicionarCampoAdicionalAsync(dtos);
 
             return Ok(retorno);
         }

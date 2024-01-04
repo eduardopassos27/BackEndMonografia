@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 namespace BackEndMonografia.Controllers
 {
     [ApiController]
-    [Route("v1/origins")]
-    public class OriginController : ControllerBase
+    [Route("v1/origens")]
+    public class OrigensController : ControllerBase
     {
         private readonly IBaseService<OrigemDto> _baseService;
 
-        public OriginController(IBaseService<OrigemDto> baseService)
+        public OrigensController(IBaseService<OrigemDto> baseService)
         {
             _baseService = baseService;
         }
@@ -19,15 +19,15 @@ namespace BackEndMonografia.Controllers
         [HttpGet]
         public async Task<ActionResult<List<OrigemDto>>> GetAll() 
         {
-            var result = await _baseService.GetAll();
+            var result = await _baseService.ObterTodos();
 
             return Ok(result.ToList());
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<OrigemDto>>> InsertDescription(OrigemDto model)
+        public async Task<ActionResult<List<OrigemDto>>> Adicionar(OrigemDto model)
         {
-            var result = await _baseService.Add(model);
+            var result = await _baseService.Adicionar(model);
 
             return Ok(result);
         }

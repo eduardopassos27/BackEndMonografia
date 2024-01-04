@@ -13,7 +13,7 @@ namespace BackEndMonografia.Repositories
             this.dbConector = dbConector;
         }
 
-        public async Task<bool> InsertCampoAdicionalAsync(CamposAdicionaisDto dto)
+        public async Task<bool> AdicionarCampoAdicionalAsync(CamposAdicionaisDto dto)
         {
             var param = new { ID_ORIGEM = dto.ID_ORIGEM, ID_TIPO = dto.ID_TIPO, ID_DESC = dto.ID_DESC, DESC_CAMPO = dto.DESC_CAMPO };
 

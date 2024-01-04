@@ -13,17 +13,17 @@ namespace BackEndMonografia.Services
             _demandRepository = demandRepository;
         }
 
-        public Task<DemandModel> Add(DemandModel model)
+        public Task<DemandModel> Adicionar(DemandModel model)
         {
             return _demandRepository.Add(model);
         }
 
-        public Task<IEnumerable<DemandModel>> GetAll()
+        public Task<IEnumerable<DemandModel>> ObterTodas()
         {
             return _demandRepository.GetAll();
         }
 
-        public async Task<IEnumerable<CompleteDemandModel>> GetDemandsByClient(int clientId)
+        public async Task<IEnumerable<CompleteDemandModel>> ObterDemandasPorClienteId(int clientId)
         {
             return await _demandRepository.GetDemandsByClient(clientId);
         }

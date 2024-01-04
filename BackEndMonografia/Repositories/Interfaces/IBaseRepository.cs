@@ -7,10 +7,10 @@ namespace BackEndMonografia.Repositories
 {
     public interface IBaseRepository<TEntity> where TEntity : class
     {
-        Task<TEntity> GetById(int id);
-        Task<IEnumerable<TEntity>> GetAll();
-        Task<int> Add(TEntity entity);
-        Task<bool> Update(TEntity entity);
+        Task<TEntity> ObterPorId(int id);
+        Task<IEnumerable<TEntity>> ObterTodos();
+        Task<int> Adicionar(TEntity entity);
+        Task<bool> Atualizar(TEntity entity);
     }
 
     public interface IDbConector

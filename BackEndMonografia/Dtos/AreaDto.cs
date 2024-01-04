@@ -9,7 +9,7 @@ namespace BackEndMonografia.Models.System
         [Key]
         [JsonPropertyName("areaId")]
         public int ID_AREA { get; set; }
-        [JsonPropertyName("areaName")]
+        [JsonPropertyName("nomeArea")]
         public string NM_AREA { get; set; }
 
     }

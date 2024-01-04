@@ -77,7 +77,6 @@ namespace BackEndMonografia.Repositories
                           ,demand.[ID_STATUS] as StatusId
 	                      ,[NM_STATUS] as StatusDescription
                           ,[PRAZO_RESOLUCAO] as ResulutionDeadline
-                          ,[SOLUCAO] as Solution
                           ,[COMENTARIO_ABERTURA] as OpeningComment
                           ,[COMENTARIO_FINAL] as FinalComment
                           ,[ID_CLIENTE] as ClientId
